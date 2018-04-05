@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="48dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".PruebaActivity"
+    >
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        />
+
+    <Button
+        android:id="@+id/boton_iniciar_prueba"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:text="Inicia prueba"
+        android:onClick="Hacer_peticion_REST"/>
+    <Button
+        android:id="@+id/boton_iniciar_prueba2"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:text="Hacer Request"
+        android:onClick="Hacer_request_estaciones"/>
+
+    <Button
+        android:id="@+id/boton_iniciar_prueba3"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:text="Hacer Request"
+        android:onClick="Hacer_request_ciudades"/>
+    <Button
+        android:id="@+id/boton_iniciar_prueba4"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:text="Hacer Request"
+        android:onClick="Hacer_request_estacion"/>
+
+</LinearLayout>

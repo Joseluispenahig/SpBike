@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SpBike</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="google_maps_key2">AIzaSyAVK2Qhr-Vv2GVHxK-w5sCMfSL_Bv_pbMA</string>
+</resources>
