@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
             } else {
                 Toast.makeText(getApplicationContext(),
                         "Se ha iniciado sesion correctamente", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(this, PrincipalActivity.class);
+                Intent intent = new Intent(this, MenuLateralActivity.class);
                 startActivity(intent);
             }
         }

@@ -36,3 +36,10 @@ dependencies {
     compile files('libs/ksoap2-android-assembly-3.4.0-jar-with-dependencies.jar')
     compile 'com.mcxiaoke.volley:library:1.0.+'
 }
+dependencies {
+    implementation 'com.android.support:design:26.+'
+    implementation 'com.android.support.constraint:constraint-layout:+'
+}
+dependencies {
+    implementation 'com.android.support:support-v4:26.+'
+}
