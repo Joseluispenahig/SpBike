@@ -1,6 +1,9 @@
 package com.dam.spbike;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +22,7 @@ public class MenuLateralActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private MiBaseDatos MDB;
     TextView usuario,correo;
+    Usuarios usuarioinicio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +54,11 @@ public class MenuLateralActivity extends AppCompatActivity
         View hView = navigationView.getHeaderView(0);
         TextView correo = (TextView) hView.findViewById(R.id.correo);
         TextView usuario = (TextView) hView.findViewById(R.id.usuario);
-        usuario.setText("Juan Gomez");
-        correo.setText("Juan@gmail.com");
+        //Obtenemos el objeto que se ha pasado de la actividad Main.
+        Usuarios usuarioinicio=  (Usuarios) getIntent().getExtras().getSerializable("parametro");
+
+        usuario.setText(usuarioinicio.getNombre());
+        correo.setText(usuarioinicio.getEmail());
 
         android.support.v4.app.FragmentManager fragmentManager=getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.contenedor,new PrincipalFragment()).commit();
@@ -63,12 +70,28 @@ public class MenuLateralActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //if (drawer.isDrawerOpen(GravityCompat.START)) {
+        //    drawer.closeDrawer(GravityCompat.START);
+        //} else {
+        //    super.onBackPressed();
+        //}
+        //Creamos una ventana de dialogo para el cierre de sesion
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Cierre de sesión");
+        builder.setMessage("¿Desea cerrar sesión?");
+        builder.setPositiveButton("Si",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                irInicio();
+            }
+        });
+        builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                //No hace nada cuando se pulsa
+            }
+        });
+        builder.create();
+        builder.show();
     }
 
     @Override
@@ -119,4 +142,13 @@ public class MenuLateralActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void irInicio(){
+        //Utilizando finish se mantienen los datos escritos
+        //finish();
+        //Si lo ponemos con Intend se borran los campos delos editText
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
 }

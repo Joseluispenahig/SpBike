@@ -1,6 +1,8 @@
 package com.dam.spbike;
 
-public class Usuarios{
+import java.io.Serializable;
+
+public class Usuarios implements Serializable{
 
     private int id;
     private String nombre;
@@ -9,12 +11,13 @@ public class Usuarios{
     private String email;
     private boolean reservada;
 
-    public Usuarios(int id,String nombre,String apellido,String contrasena,String email){
+    public Usuarios(int id,String nombre,String apellido,String email,String contrasena){
         this.id=id;
         this.nombre=nombre;
         this.apellido=apellido;
-        this.contrasena=contrasena;
         this.email=email;
+        this.contrasena=contrasena;
+
     }
 
     public int getId(){

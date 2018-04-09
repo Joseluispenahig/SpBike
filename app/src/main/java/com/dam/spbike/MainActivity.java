@@ -44,6 +44,7 @@ public class MainActivity extends Activity {
                 Toast.makeText(getApplicationContext(),
                         "Se ha iniciado sesion correctamente", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, MenuLateralActivity.class);
+                intent.putExtra("parametro", usuarioPrincipal);
                 startActivity(intent);
             }
         }
