@@ -11,6 +11,8 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
     EditText editUsuario, editContraseña;
     private MiBaseDatos MDB;
+    public static String opciona=null;
+    public static String opcionb=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

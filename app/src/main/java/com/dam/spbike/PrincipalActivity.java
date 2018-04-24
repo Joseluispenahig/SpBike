@@ -27,24 +27,24 @@ public class PrincipalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
-        Spinner spinner1=(Spinner) findViewById(R.id.spinner1);
-        final Spinner spinner2= (Spinner) findViewById(R.id.spinner2);
-        Spinner spinner3= (Spinner) findViewById(R.id.spinner3);
 
-        spinner1.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, letra));
+        Spinner spinner2= (Spinner) findViewById(R.id.spinner2);
+        final Spinner spinner3= (Spinner) findViewById(R.id.spinner3);
+
+        spinner2.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, letra));
         //spinner2.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, letra));
         spinner3.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, letra));
 
-        spinner1.setOnItemSelectedListener(new OnItemSelectedListener() {
+        spinner2.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // your code here
                 String escogido = letra[position];
                 if (escogido != "Seleccionar") {
                     if (escogido == "A") {
-                        spinner2.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, opciona));
+                        spinner3.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, opciona));
                     } else if (escogido == "B") {
-                        spinner2.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, opcionb));
+                        spinner3.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, opcionb));
                     } else {
                         System.out.println("hola3");
                     }
@@ -52,7 +52,7 @@ public class PrincipalActivity extends AppCompatActivity {
                     System.out.println("letra");
                 }
                 else{
-                    spinner2.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item));
+                    spinner3.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item));
                 }
 
             }
