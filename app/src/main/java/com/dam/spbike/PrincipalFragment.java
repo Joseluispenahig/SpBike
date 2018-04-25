@@ -100,7 +100,7 @@ public class PrincipalFragment extends Fragment {
                 Intent intent = new Intent(getContext() ,MapsActivity.class);
                 intent.putExtra("ciudad", MainActivity.opciona);
                 intent.putExtra("estacion", MainActivity.opcionb);
-                startActivity(intent);
+                startActivity(intent );
             }
         });
         return view;
