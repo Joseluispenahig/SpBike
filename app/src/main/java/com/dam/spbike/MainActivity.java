@@ -57,30 +57,7 @@ public class MainActivity extends Activity {
     }
 
     public void IrActividadPrueba(View view) {
-        editUsuario = (EditText) findViewById(R.id.input_usuario);
-        editContraseña = (EditText) findViewById(R.id.input_contrasena);
-        String usuario = editUsuario.getText().toString();
-        String contrasena = editContraseña.getText().toString();
-        System.out.println("Usuario: " + usuario);
-        System.out.println("Contraseña: " + contrasena);
-        int tamano1=usuario.length();
-        int tamano2=contrasena.length();
-        if (usuario.length()>0 && contrasena.length()>0) {
-
-            Usuarios usuarioPrincipal = MDB.recuperarUSUARIO(usuario, contrasena);
-            if (usuarioPrincipal == null) {
-                Toast.makeText(getApplicationContext(),
-                        "Datos Incorrectos", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(getApplicationContext(),
-                        "Se ha iniciado sesion correctamente", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(this, PruebaActivity.class);
-                startActivity(intent);
-            }
-        }
-        else{
-            Toast.makeText(getApplicationContext(),
-                    "Inserte datos", Toast.LENGTH_LONG).show();
-        }
+        Intent intent = new Intent(this, PruebaActivity.class);
+        startActivity(intent);
     }
 }

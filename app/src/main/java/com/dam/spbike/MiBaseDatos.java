@@ -25,7 +25,7 @@ public class MiBaseDatos extends SQLiteOpenHelper {
             " (id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, apellido TEXT, email TEXT, contrasena TEXT, reservada BOOLEAN)";
 
     private static final String TABLA_PARADAS ="CREATE TABLE IF NOT EXISTS estaciones " +
-            " (id INTEGER PRIMARY KEY, nombre TEXT, direccion TEXT,latitude TEXT, longitude TEXT, ciudad TEXT, uid INTEGER, cantidad INTEGER, libres INTEGER, ocupadas INTEGER)";
+            " (id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, direccion TEXT,latitude TEXT, longitude TEXT, ciudad TEXT, uid INTEGER, cantidad INTEGER, libres INTEGER, ocupadas INTEGER)";
 
     public MiBaseDatos(Context context) {
         super(context, NOMBRE_BASEDATOS, null, VERSION_BASEDATOS);
@@ -174,16 +174,13 @@ public class MiBaseDatos extends SQLiteOpenHelper {
 
     /*Metodos usados para la Tabla ESTACIONES*/
     //Insertamos un usuario en la BD.
-    public boolean insertarESTACION(int id, String nombre,String direccion, String latitude,String longitude, String ciudad,int uid,int cantidad,int libres,int ocupadas) {
+    public boolean insertarESTACION(String nombre,String direccion, String latitude,String longitude, String ciudad,int uid,int cantidad,int libres,int ocupadas) {
         long salida=0;
         String[] filtroselect={"nombre","direccion","ciudad"};
         String[] filtrocolumna={nombre,direccion,ciudad};
         SQLiteDatabase db = getWritableDatabase();
         if (db != null) {
             ContentValues valores = new ContentValues();
-            if(id!=0)
-                valores.put("id", id);
-
             valores.put("nombre", nombre);
             valores.put("direccion", direccion);
             valores.put("latitude", latitude);
@@ -266,24 +263,27 @@ public class MiBaseDatos extends SQLiteOpenHelper {
     public Estaciones obtenerESTACION(String ciudad,String nombre) {
         SQLiteDatabase db = getReadableDatabase();
         //ArrayList<String> lista_usuarios = new ArrayList<String>();
+        Estaciones estacion;
         String[] valores_recuperar = {"id","nombre","direccion","latitude","longitude","ciudad","uid","cantidad","libres","ocupadas"};
         String[] filtroColumnas = {ciudad,nombre};
-        Cursor c = db.query("estaciones", valores_recuperar, "ciudad=? AND nombre=?", filtroColumnas, null, null, "uid", null);
+        Cursor c = db.query("estaciones", valores_recuperar, " ciudad=? AND nombre=?", filtroColumnas, null, null, "uid", null);
         //Si el numero de elementos tupla del cursor es 0,no tendremos usuarios y devolvemos Null,
         //c.getCount devuelve los elementos de tipo tupla(filas).
-        if (c != null) {
-            c.moveToFirst();
+        if (c.getCount() == 0) {
+            return null;
         }
-        System.out.println(Integer.toString(c.getInt(0)) +" " + c.getString(1) + " "+c.getString(2) + " " +
-                c.getString(3) + " " + c.getString(4) + " "  + c.getString(5) + " " + Integer.toString(c.getInt(6)) + " " + Integer.toString(c.getInt(7)) + " " + Integer.toString(c.getInt(8)) + " " + Integer.toString(c.getInt(9)));
-        String concatenado=c.getString(0) + " "+c.getString(1) + " " +
-                c.getString(2) + " " + c.getString(3) + " "  + c.getString(4) + " " +
-                Integer.toString(c.getInt(5)) + " " + Integer.toString(c.getInt(6)) + " " + Integer.toString(c.getInt(7));
-        Estaciones estacion=new Estaciones(c.getInt(0),c.getString(1),
-                c.getString(2),c.getString(3) ,c.getString(4),
-                c.getString(5),c.getInt(6),c.getInt(7),c.getInt(8),c.getInt(9));
-                //lista_usuarios.add(concatenado);
-
+        else {
+            c.moveToFirst();
+            System.out.println(Integer.toString(c.getInt(0)) + " " + c.getString(1) + " " + c.getString(2) + " " +
+                    c.getString(3) + " " + c.getString(4) + " " + c.getString(5) + " " + Integer.toString(c.getInt(6)) + " " + Integer.toString(c.getInt(7)) + " " + Integer.toString(c.getInt(8)) + " " + Integer.toString(c.getInt(9)));
+            String concatenado = c.getString(0) + " " + c.getString(1) + " " +
+                    c.getString(2) + " " + c.getString(3) + " " + c.getString(4) + " " +
+                    Integer.toString(c.getInt(5)) + " " + Integer.toString(c.getInt(6)) + " " + Integer.toString(c.getInt(7));
+            estacion = new Estaciones(c.getInt(0), c.getString(1),
+                    c.getString(2), c.getString(3), c.getString(4),
+                    c.getString(5), c.getInt(6), c.getInt(7), c.getInt(8), c.getInt(9));
+            //lista_usuarios.add(concatenado);
+        }
         db.close();
         c.close();
 

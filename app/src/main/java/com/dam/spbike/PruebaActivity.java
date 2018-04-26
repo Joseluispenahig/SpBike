@@ -128,7 +128,7 @@ public class PruebaActivity extends Activity {
                                     System.out.println(ident+" "+ nombre + " " + direccion + " " + latitude+ " "+ longitude + " "+  cantidads + " " + uids + " " + Integer.toString(libres) + " " + Integer.toString(ocupadas) );
 
                                     //Insertamos en BD
-                                    MDB.insertarESTACION(id,nombre,direccion,latitude,longitude,ciudad,uid,cantidad,libres,ocupadas);
+                                    MDB.insertarESTACION(nombre,direccion,latitude,longitude,ciudad,uid,cantidad,libres,ocupadas);
                                 }
                                 //Usando opción 2:
                                 //String hostExists = response.getString("valid");
@@ -177,7 +177,7 @@ public class PruebaActivity extends Activity {
     }
 
     void Hacer_request_estacion (View view){
-        Estaciones estacion=MDB.obtenerESTACION("Madrid","Agustín de Betancourt");
+        Estaciones estacion=MDB.obtenerESTACION("Sevilla","013_CALLE FERIA");
             System.out.println(estacion.getNombre() +" " +  estacion.getDireccion() +" " + estacion.getCiudad() + " " + estacion.getLatitude() + " " + estacion.getLongitude() );
 
     }

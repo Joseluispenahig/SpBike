@@ -13,6 +13,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    Usuarios usuarioinicio;
+    Estaciones estacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
        // SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
         MapFragment mapFragment =  (MapFragment)getFragmentManager().findFragmentById(R.id.mapView);
         mapFragment.getMapAsync(this);
+
+        usuarioinicio=  (Usuarios) getIntent().getExtras().getSerializable("parametro");
+        System.out.println("Usuario que ha iniciado sesion: " + usuarioinicio.getNombre() + " "+ usuarioinicio.getApellido() + " " + usuarioinicio.getEmail());
+        //Obtenemos el objeto que se ha pasado de la actividad Main.
+        estacion=  (Estaciones) getIntent().getExtras().getSerializable("estaciones");
+        System.out.println("Estacion seleccionada: " + estacion.getCiudad() + " " + estacion.getNombre());
     }
 
 

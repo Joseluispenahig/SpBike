@@ -30,6 +30,10 @@ public class PrincipalFragment extends Fragment {
     String[] ciudades, estaciones;
     private MiBaseDatos MDB;
     private View vista;
+    Usuarios usuarioinicio;
+    String escogidaciudad;
+    String escogidaestacion;
+    Estaciones estacionseleccionada;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +44,7 @@ public class PrincipalFragment extends Fragment {
         //super.onCreate(savedInstanceState);
         MDB = new MiBaseDatos(getActivity().getApplicationContext());
         final View view = inflater.inflate(R.layout.fragment_principal, container, false);
+        usuarioinicio=  (Usuarios) getActivity().getIntent().getExtras().getSerializable("parametro");
 
         ciudadesBD = MDB.obtenerCIUDADES();
         ciudadesBD.add(0, "Seleccionar");
@@ -62,9 +67,9 @@ public class PrincipalFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // your code here
-                String escogido = ciudades[position];
-                if (escogido != "Seleccionar") {
-                    estacionesBD = MDB.obtenerESTACIONES(escogido);
+                escogidaciudad = ciudades[position];
+                if (escogidaciudad != "Seleccionar") {
+                    estacionesBD = MDB.obtenerESTACIONES(escogidaciudad);
                     estacionesBD.add(0, "Seleccionar");
                     estaciones = new String[estacionesBD.size()];
                     estaciones = estacionesBD.toArray(estaciones);
@@ -87,6 +92,7 @@ public class PrincipalFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // your code here
                 MainActivity.opcionb = parentView.getItemAtPosition(position).toString();
+                escogidaestacion= estaciones[position].substring(3);
             }
 
             @Override
@@ -94,12 +100,14 @@ public class PrincipalFragment extends Fragment {
                 // your code here
             }
         });
-
         enviar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                estacionseleccionada=MDB.obtenerESTACION(escogidaciudad,escogidaestacion);
                 Intent intent = new Intent(getContext() ,MapsActivity.class);
                 intent.putExtra("ciudad", MainActivity.opciona);
                 intent.putExtra("estacion", MainActivity.opcionb);
+                intent.putExtra("parametro",usuarioinicio);
+                intent.putExtra("estaciones",estacionseleccionada);
                 startActivity(intent );
             }
         });

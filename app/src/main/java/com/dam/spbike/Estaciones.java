@@ -1,6 +1,8 @@
 package com.dam.spbike;
 
-public class Estaciones{
+import java.io.Serializable;
+
+public class Estaciones implements Serializable {
     private int id;
     private String nombre;
     private String direccion;
