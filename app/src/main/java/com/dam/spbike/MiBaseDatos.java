@@ -22,10 +22,10 @@ public class MiBaseDatos extends SQLiteOpenHelper {
     private static final String NOMBRE_BASEDATOS = "mibasedatos.db";
     //String con la creacion de la tabla contactos en nuestra BD.
     private static final String TABLA_USUARIOS ="CREATE TABLE IF NOT EXISTS usuarios " +
-            " (id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, apellido TEXT, email TEXT, contrasena TEXT, reservada BOOLEAN)";
+            " (id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, apellido TEXT, email TEXT, contrasena TEXT, reservada INTEGER)";
 
     private static final String TABLA_PARADAS ="CREATE TABLE IF NOT EXISTS estaciones " +
-            " (id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, direccion TEXT,latitude TEXT, longitude TEXT, ciudad TEXT, uid INTEGER, cantidad INTEGER, libres INTEGER, ocupadas INTEGER)";
+            " (id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, direccion TEXT,latitude TEXT, longitude TEXT, ciudad TEXT, uid INTEGER, cantidad INTEGER, libres INTEGER, reservadas INTEGER)";
 
     public MiBaseDatos(Context context) {
         super(context, NOMBRE_BASEDATOS, null, VERSION_BASEDATOS);
@@ -52,6 +52,7 @@ public class MiBaseDatos extends SQLiteOpenHelper {
         long salida=0;
         String[] filtroselect={"nombre","apellido","email","contrasena"};
         String[] filtrocolumna={email};
+        int reservada=0;
         SQLiteDatabase db = getWritableDatabase();
         if (db != null) {
             ContentValues valores = new ContentValues();
@@ -59,6 +60,7 @@ public class MiBaseDatos extends SQLiteOpenHelper {
             valores.put("apellido", ape);
             valores.put("email", email);
             valores.put("contrasena", contrasena);
+            valores.put("reservada",reservada);
 
             //Condición para que no tengamos repetición de información.
             Cursor c =db.query("usuarios",filtroselect,"email=?",filtrocolumna,null,null,null);
@@ -86,6 +88,43 @@ public class MiBaseDatos extends SQLiteOpenHelper {
         db.close();
         return(salida>0);
     }
+    //Modificamos un usuario en la tabla contactos de la BD.
+    public boolean  modificarreservaUSUARIO(int id,int reserva){
+        long salida=0;
+        SQLiteDatabase db = getWritableDatabase();
+        String [] condicion={Integer.toString(id)};
+        if (db != null) {
+            ContentValues valores = new ContentValues();
+            valores.put("reservada", reserva);
+            salida=db.update("usuarios", valores, "id=?", condicion);
+            System.out.println("Salida");
+        }
+        db.close();
+        return(salida>0);
+    }
+    //Recuperamos las estaciones correspondientes a una ciudad.
+    public int obtenerReserva(int id) {
+        SQLiteDatabase db = getReadableDatabase();
+        int reservada=0;
+        String[] valores_recuperar = {"reservada"};
+        String[] filtroColumnas = {Integer.toString(id)};
+        Cursor c = db.query("usuarios", valores_recuperar, "id=?", filtroColumnas, null, null, "id", null);
+        //Si el numero de elementos tupla del cursor es 0,no tendremos usuarios y devolvemos Null,
+        //c.getCount devuelve los elementos de tipo tupla(filas).
+        if (c.getCount() == 0) {
+            System.out.println("No existe ese valor");
+        } else {
+            c.moveToFirst();
+            do {
+               reservada=c.getInt(0);
+            } while (c.moveToNext());
+        }
+        db.close();
+        c.close();
+
+        return reservada;
+    }
+
 
     public boolean compruebaemailBD(String email) {
         boolean correcto=false;
@@ -121,13 +160,13 @@ public class MiBaseDatos extends SQLiteOpenHelper {
 
     public Usuarios recuperarUSUARIO(String email,String contrasena) {
         SQLiteDatabase db = getReadableDatabase();
-        String[] valores_recuperar = {"id", "nombre", "apellido", "email","contrasena"};
+        String[] valores_recuperar = {"id", "nombre", "apellido", "email","contrasena","reservada"};
         String[] filtrocolumna={email,contrasena};
         Usuarios usuarios;
         Cursor c =db.query("usuarios",valores_recuperar,"email=? and contrasena=?",filtrocolumna,null,null,null);
         if(c.getCount()>0) {
             c.moveToFirst();
-            usuarios = new Usuarios(c.getInt(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4));
+            usuarios = new Usuarios(c.getInt(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4),c.getInt(5));
         }
         else{
             usuarios=null;
@@ -151,7 +190,7 @@ public class MiBaseDatos extends SQLiteOpenHelper {
         else {
             c.moveToFirst();
             do {
-                Usuarios usuarios = new Usuarios(c.getInt(0), c.getString(1), c.getString(2), c.getString(3),c.getString(4));
+                Usuarios usuarios = new Usuarios(c.getInt(0), c.getString(1), c.getString(2), c.getString(3),c.getString(4),c.getInt(5));
                 lista_usuarios.add(usuarios);
             } while (c.moveToNext());
         }
@@ -174,7 +213,7 @@ public class MiBaseDatos extends SQLiteOpenHelper {
 
     /*Metodos usados para la Tabla ESTACIONES*/
     //Insertamos un usuario en la BD.
-    public boolean insertarESTACION(String nombre,String direccion, String latitude,String longitude, String ciudad,int uid,int cantidad,int libres,int ocupadas) {
+    public boolean insertarESTACION(String nombre,String direccion, String latitude,String longitude, String ciudad,int uid,int cantidad,int libres,int reservadas) {
         long salida=0;
         String[] filtroselect={"nombre","direccion","ciudad"};
         String[] filtrocolumna={nombre,direccion,ciudad};
@@ -189,7 +228,7 @@ public class MiBaseDatos extends SQLiteOpenHelper {
             valores.put("uid", uid);
             valores.put("cantidad", cantidad);
             valores.put("libres", libres);
-            valores.put("ocupadas", ocupadas);
+            valores.put("reservadas", reservadas);
 
             //Condición para que no tengamos repetición de información.
             Cursor c =db.query("estaciones",filtroselect,"nombre=? and direccion=? and ciudad=?",filtrocolumna,null,null,"id");
@@ -197,6 +236,19 @@ public class MiBaseDatos extends SQLiteOpenHelper {
             if(c.getCount()<=0)
             {
                 salida = db.insert("estaciones", null, valores);
+            }
+            else{
+                ContentValues valoresact = new ContentValues();
+                //Solo podriamos acualizar libres,el resto no haria falta.
+                valores.put("nombre", nombre);
+                valores.put("direccion", direccion);
+                valores.put("latitude", latitude);
+                valores.put("longitude", longitude);
+                valores.put("ciudad", ciudad);
+                valores.put("uid", uid);
+                valores.put("cantidad", cantidad);
+                valores.put("libres", libres);
+                salida = db.update("estaciones",valores,"nombre=? and direccion=? and ciudad=?",filtrocolumna);
             }
         }
         db.close();
@@ -264,7 +316,7 @@ public class MiBaseDatos extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         //ArrayList<String> lista_usuarios = new ArrayList<String>();
         Estaciones estacion;
-        String[] valores_recuperar = {"id","nombre","direccion","latitude","longitude","ciudad","uid","cantidad","libres","ocupadas"};
+        String[] valores_recuperar = {"id","nombre","direccion","latitude","longitude","ciudad","uid","cantidad","libres","reservadas"};
         String[] filtroColumnas = {ciudad,nombre};
         Cursor c = db.query("estaciones", valores_recuperar, " ciudad=? AND nombre=?", filtroColumnas, null, null, "uid", null);
         //Si el numero de elementos tupla del cursor es 0,no tendremos usuarios y devolvemos Null,
@@ -288,5 +340,65 @@ public class MiBaseDatos extends SQLiteOpenHelper {
         c.close();
 
         return estacion;
+    }
+    //Recuperamos las estaciones correspondientes a una ciudad.
+    public int obtenerLibres(int id) {
+        SQLiteDatabase db = getReadableDatabase();
+        int libres=0;
+        String[] valores_recuperar = {"libres"};
+        String[] filtroColumnas = {Integer.toString(id)};
+        Cursor c = db.query("estaciones", valores_recuperar, "id=?", filtroColumnas, null, null, "id", null);
+        //Si el numero de elementos tupla del cursor es 0,no tendremos usuarios y devolvemos Null,
+        //c.getCount devuelve los elementos de tipo tupla(filas).
+        if (c.getCount() == 0) {
+            System.out.println("No existe ese valor");
+        } else {
+            c.moveToFirst();
+            do {
+                libres=c.getInt(0);
+            } while (c.moveToNext());
+        }
+        db.close();
+        c.close();
+
+        return libres;
+    }
+
+    //Recuperamos las estaciones correspondientes a una ciudad.
+    public int obtenerReservadas(int id) {
+        SQLiteDatabase db = getReadableDatabase();
+        int reservadas=0;
+        String[] valores_recuperar = {"reservadas"};
+        String[] filtroColumnas = {Integer.toString(id)};
+        Cursor c = db.query("estaciones", valores_recuperar, "id=?", filtroColumnas, null, null, "id", null);
+        //Si el numero de elementos tupla del cursor es 0,no tendremos usuarios y devolvemos Null,
+        //c.getCount devuelve los elementos de tipo tupla(filas).
+        if (c.getCount() == 0) {
+            System.out.println("No existe ese valor");
+        } else {
+            c.moveToFirst();
+            do {
+                reservadas=c.getInt(0);
+            } while (c.moveToNext());
+        }
+        db.close();
+        c.close();
+
+        return reservadas;
+    }
+
+    //Modificamos un usuario en la tabla contactos de la BD.
+    public boolean  modificarreservadaESTACION(int id,int reserva){
+        long salida=0;
+        SQLiteDatabase db = getWritableDatabase();
+        String [] condicion={Integer.toString(id)};
+        if (db != null) {
+            ContentValues valores = new ContentValues();
+            valores.put("reservadas", reserva);
+            salida=db.update("estaciones", valores, "id=?", condicion);
+            System.out.println("Salida");
+        }
+        db.close();
+        return(salida>0);
     }
 }

@@ -12,10 +12,10 @@ public class Estaciones implements Serializable {
     private int uid;
     private int cantidad;
     private int libres;
-    private int ocupadas;
+    private int reservadas;
 
     public Estaciones(int id,String nombre,String direccion,String latitude,String longitude,
-                      String ciudad,int uid,int cantidad,int libres,int ocupadas){
+                      String ciudad,int uid,int cantidad,int libres,int reservadas){
         this.id=id;
         this.nombre=nombre;
         this.direccion=direccion;
@@ -25,7 +25,7 @@ public class Estaciones implements Serializable {
         this.uid=uid;
         this.cantidad=cantidad;
         this.libres=libres;
-        this.ocupadas=ocupadas;
+        this.reservadas=reservadas;
     }
 
     public int getId() {
@@ -100,11 +100,11 @@ public class Estaciones implements Serializable {
         this.libres = libres;
     }
 
-    public int getOcupadas() {
-        return ocupadas;
+    public int getReservadas() {
+        return reservadas;
     }
 
-    public void setOcupadas(int ocupadas) {
-        this.ocupadas = ocupadas;
+    public void setReservadas(int reservadas) {
+        this.reservadas = reservadas;
     }
 }

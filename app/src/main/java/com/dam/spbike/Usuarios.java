@@ -9,15 +9,15 @@ public class Usuarios implements Serializable{
     private String apellido;
     private String contrasena;
     private String email;
-    private boolean reservada;
+    private int reservada;
 
-    public Usuarios(int id,String nombre,String apellido,String email,String contrasena){
+    public Usuarios(int id,String nombre,String apellido,String email,String contrasena,int reservada){
         this.id=id;
         this.nombre=nombre;
         this.apellido=apellido;
         this.email=email;
         this.contrasena=contrasena;
-
+        this.reservada=reservada;
     }
 
     public int getId(){
@@ -59,11 +59,11 @@ public class Usuarios implements Serializable{
         this.email=email;
     }
 
-    public boolean getReservada(){
+    public int getReservada(){
         return reservada;
     }
 
-    public void setReservada(boolean reservada){
+    public void setReservada(int reservada){
         this.reservada=reservada;
     }
 }

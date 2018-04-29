@@ -73,19 +73,20 @@ public class InicioActivity extends Activity {
                                     String direccion = estacion.getJSONObject("extra").getString("address");
                                     String latitude = estacion.getString("latitude");
                                     String longitude = estacion.getString("longitude");
-                                    String cantidads = estacion.getJSONObject("extra").getString("slots");
                                     String uids = estacion.getJSONObject("extra").getString("uid");
+                                    String cantidads = estacion.getJSONObject("extra").getString("slots");
+                                    String libresAPI=estacion.getString("free_bikes");
 
                                     int uid = Integer.parseInt(uids);
                                     int cantidad = Integer.parseInt(cantidads);
 
-                                    int libres = cantidad;
-                                    int ocupadas = 0;
+                                    int libres = Integer.parseInt(libresAPI);
+                                    int reservadas = 0;
 
-                                    System.out.println(ident + " " + nombre + " " + direccion + " " + latitude + " " + longitude + " " + cantidads + " " + uids + " " + Integer.toString(libres) + " " + Integer.toString(ocupadas));
+                                    System.out.println(ident + " " + nombre + " " + direccion + " " + latitude + " " + longitude + " " + cantidads + " " + uids + " " + Integer.toString(libres) + " " + Integer.toString(reservadas));
 
                                     //Insertamos en BD
-                                    MDB.insertarESTACION(nombre, direccion, latitude, longitude, ciudad, uid, cantidad, libres, ocupadas);
+                                    MDB.insertarESTACION(nombre, direccion, latitude, longitude, ciudad, uid, cantidad, libres, reservadas);
                                 }
                                 //Usando opción 2:
                                 //String hostExists = response.getString("valid");
