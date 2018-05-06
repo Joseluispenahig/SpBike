@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -48,6 +51,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        final ImageButton refrescar=(ImageButton) findViewById(R.id.imageButton);
+        refrescar.bringToFront();
+        refrescar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //refrescar.animate().rotation(refrescar.getRotation()-360).start();
+
+                refrescar.animate().rotationBy(360).setInterpolator(new LinearInterpolator()).start();
+                actualizardatosAPI(view);
+                //refrescar.animate().cancel();
+            }
+        });
         MDB = new MiBaseDatos(getApplicationContext());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
