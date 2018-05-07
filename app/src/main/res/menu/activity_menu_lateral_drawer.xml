@@ -6,12 +6,12 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@android:drawable/ic_search_category_default"
             android:title="Consulta" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:icon="@android:drawable/ic_dialog_map"
+            android:title="Buscar estaciones" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
@@ -30,8 +30,8 @@
                 android:title="Enlaces de Interes" />
             <item
                 android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Datos de Interes" />
+                android:icon="@android:drawable/ic_dialog_info"
+                android:title="Contactar" />
         </menu>
     </item>
 

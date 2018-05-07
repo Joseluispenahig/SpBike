@@ -53,16 +53,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/input_identificador"
+        android:layout_width="177dp"
+        android:layout_height="31dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        tools:layout_editor_absoluteX="191dp"
+        tools:layout_editor_absoluteY="218dp" />
+
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="148dp"
         android:layout_marginStart="148dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="112dp"
         android:text="Ver"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner3" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Identificador de Parada"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="230dp" />
 
 </android.support.constraint.ConstraintLayout>

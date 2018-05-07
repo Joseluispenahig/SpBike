@@ -8,6 +8,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -46,6 +47,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     int reservadas;
     TextView bicic_disp;
     int id;
+    LatLng PosEstacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,12 +100,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng PosEstacion = new LatLng(Double.parseDouble(estacion.getLatitude()), Double.parseDouble(estacion.getLongitude()));
-        mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion "+estacion.getNombre()));
+        PosEstacion = new LatLng(Double.parseDouble(estacion.getLatitude()), Double.parseDouble(estacion.getLongitude()));
+        mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion "+estacion.getNombre()).snippet("Disponibles: "+ disponibles));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PosEstacion,18));
     }
 
     public void Reservar(View view) {
+        mMap.clear();
         actualizalibresreservadas();
         //Condicion de que se realize la reserva si hay bicicletas disponibles o el usuario no haya reservado
         if(MDB.obtenerReserva(usuarioinicio.getId())==0 && disponibles > 0) {
@@ -115,13 +118,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             usuarioinicio.setReservada(1);
             estacion.setReservadas(reservadas);
             disponibles=libres-reservadas;
+            mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion "+estacion.getNombre()).snippet("Disponibles: "+ disponibles));
+            Toast.makeText(getApplicationContext(),
+                    "Se ha realizado la reserva correctamente", Toast.LENGTH_SHORT).show();
         }
         else{
-            System.out.println("No se puede realizar reserva");
+            System.out.println("No se puede realizar la reserva");
+            Toast.makeText(getApplicationContext(),
+                    "No se puede realizar la reserva", Toast.LENGTH_SHORT).show();
         }
         bicic_disp.setText("Bicicletas disponibles: " + disponibles);
     }
     public void CancelarReserva(View view) {
+        mMap.clear();
         libres=MDB.obtenerLibres(estacion.getId());
         reservadas=MDB.obtenerReservadas(estacion.getId());
         //Condicion de que se realize cancele la reserva si el usuario no haya reservado
@@ -134,13 +143,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             MDB.modificarreservadaESTACION(estacion.getId(),reservadas);
             estacion.setReservadas(reservadas);
             disponibles=libres-reservadas;
+            mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion "+estacion.getNombre()).snippet("Disponibles: "+ disponibles));
+            Toast.makeText(getApplicationContext(),
+                    "Se ha cancelado la reserva", Toast.LENGTH_SHORT).show();
         }
         else{
             System.out.println("No tiene realizada ninguna reserva");
+            Toast.makeText(getApplicationContext(),
+                    "No tiene realizada ninguna reserva", Toast.LENGTH_SHORT).show();
         }
         bicic_disp.setText("Bicicletas disponibles: " + disponibles);
     }
     public void actualizardatosAPI(View view) {
+        mMap.clear();
         List<String> supplierNames = new ArrayList<String>();
         supplierNames.add("sevici");
         supplierNames.add("bicimad");
@@ -198,6 +213,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         MDB.insertarESTACION(nombre, direccion, latitude, longitude, ciudad, uid, cantidad, libres, reservadas);
                                         actualizalibresreservadas();
                                         bicic_disp.setText("Bicicletas disponibles: " + disponibles);
+                                        mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion "+estacion.getNombre()).snippet("Disponibles: "+ disponibles));
                                     }
                                 }
                                 //Usando opción 2:

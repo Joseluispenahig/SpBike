@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 
@@ -34,6 +35,8 @@ public class PrincipalFragment extends Fragment {
     String escogidaciudad;
     String escogidaestacion;
     Estaciones estacionseleccionada;
+    EditText edit_ident;
+    String identificador;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +45,7 @@ public class PrincipalFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         //super.onCreate(savedInstanceState);
+
         MDB = new MiBaseDatos(getActivity().getApplicationContext());
         final View view = inflater.inflate(R.layout.fragment_principal, container, false);
         usuarioinicio=  (Usuarios) getActivity().getIntent().getExtras().getSerializable("parametro");
@@ -51,7 +55,7 @@ public class PrincipalFragment extends Fragment {
         ciudades = new String[ciudadesBD.size()];
         ciudades = ciudadesBD.toArray(ciudades);
 
-
+        edit_ident = (EditText) view.findViewById(R.id.input_identificador);
         //Spinner spinner1=(Spinner) view.findViewById(R.id.spinner1);
         Spinner spinner2 = (Spinner) view.findViewById(R.id.spinner2);
         Button enviar= (Button) view.findViewById(R.id.button);
@@ -102,13 +106,21 @@ public class PrincipalFragment extends Fragment {
         });
         enviar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                estacionseleccionada=MDB.obtenerESTACION(escogidaciudad,escogidaestacion);
-                Intent intent = new Intent(getContext() ,MapsActivity.class);
+                identificador = edit_ident.getText().toString();
+                if(identificador.length()>0){
+                    //Busca por uid y escogidaciudad
+                    estacionseleccionada=MDB.obtenerESTACIONporUID(escogidaciudad,identificador);
+                }
+                else {
+                    estacionseleccionada = MDB.obtenerESTACION(escogidaciudad, escogidaestacion);
+                }
+                Intent intent = new Intent(getContext(), MapsActivity.class);
                 intent.putExtra("ciudad", MainActivity.opciona);
                 intent.putExtra("estacion", MainActivity.opcionb);
-                intent.putExtra("parametro",usuarioinicio);
-                intent.putExtra("estaciones",estacionseleccionada);
-                startActivity(intent );
+                intent.putExtra("parametro", usuarioinicio);
+                intent.putExtra("estaciones", estacionseleccionada);
+                startActivity(intent);
+
             }
         });
         return view;
