@@ -34,6 +34,7 @@
         <activity android:name=".RecoveryActivity" />
         <activity android:name=".PrincipalActivity" />
         <activity android:name=".MapsActivity" />
+        <activity android:name=".StreetActivity" />
         <activity
             android:name=".MenuLateralActivity"
             android:label="@string/title_activity_menu_lateral"

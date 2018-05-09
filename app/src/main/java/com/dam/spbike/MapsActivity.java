@@ -17,9 +17,11 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowLongClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -32,7 +34,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements
+        OnMapReadyCallback {
 
     private GoogleMap mMap;
     Usuarios usuarioinicio;
@@ -103,7 +106,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         PosEstacion = new LatLng(Double.parseDouble(estacion.getLatitude()), Double.parseDouble(estacion.getLongitude()));
         mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion "+estacion.getNombre()).snippet("Disponibles: "+ disponibles));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PosEstacion,18));
+        mMap.setOnInfoWindowLongClickListener(new OnInfoWindowLongClickListener() {
+            @Override
+            public void onInfoWindowLongClick(Marker marker) {
+                Intent intent = new Intent(getApplicationContext(), StreetActivity.class);
+                intent.putExtra("Lat", PosEstacion.latitude);
+                intent.putExtra("Long", PosEstacion.longitude);
+                startActivity(intent);
+            }
+        });
     }
+
+    /*@Override
+    public abstract void onInfoWindowLongClick(Marker marker) {
+        Toast.makeText(this, "Info window clicked",
+                Toast.LENGTH_SHORT).show();
+    }*/
 
     public void Reservar(View view) {
         mMap.clear();
