@@ -161,10 +161,10 @@ public class PruebaActivity extends Activity {
     }
 
     void Hacer_request_estaciones (View view){
-        ArrayList<String> estaciones;
-        estaciones=MDB.obtenerESTACIONES("Madrid");
+        ArrayList<Estaciones> estaciones;
+        estaciones=MDB.obtenerESTACIONESPORCIUDAD("Madrid");
         for(int i=0;i<estaciones.size();i++){
-            System.out.println(estaciones.get(i));
+            System.out.println("Parada: " + estaciones.get(i).getId()+ " " + estaciones.get(i).getNombre()+ " " + estaciones.get(i).getCiudad()+ " " + estaciones.get(i).getUid());
         }
     }
 

@@ -342,6 +342,39 @@ public class MiBaseDatos extends SQLiteOpenHelper {
         return estacion;
     }
     //Recuperamos las estaciones correspondientes a una ciudad.
+    public ArrayList<Estaciones> obtenerESTACIONESPORCIUDAD(String ciudad) {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<Estaciones> lista_estaciones = new ArrayList<Estaciones>();
+        Estaciones estacion;
+        String[] valores_recuperar = {"id","nombre","direccion","latitude","longitude","ciudad","uid","cantidad","libres","reservadas"};
+        String[] filtroColumnas = {ciudad};
+        Cursor c = db.query("estaciones", valores_recuperar, " ciudad=?", filtroColumnas, null, null, "uid", null);
+        //Si el numero de elementos tupla del cursor es 0,no tendremos usuarios y devolvemos Null,
+        //c.getCount devuelve los elementos de tipo tupla(filas).
+        if (c.getCount() == 0) {
+            return null;
+        }
+        else {
+            c.moveToFirst();
+            do {
+            System.out.println(Integer.toString(c.getInt(0)) + " " + c.getString(1) + " " + c.getString(2) + " " +
+                    c.getString(3) + " " + c.getString(4) + " " + c.getString(5) + " " + Integer.toString(c.getInt(6)) + " " + Integer.toString(c.getInt(7)) + " " + Integer.toString(c.getInt(8)) + " " + Integer.toString(c.getInt(9)));
+            String concatenado = c.getString(0) + " " + c.getString(1) + " " +
+                    c.getString(2) + " " + c.getString(3) + " " + c.getString(4) + " " +
+                    Integer.toString(c.getInt(5)) + " " + Integer.toString(c.getInt(6)) + " " + Integer.toString(c.getInt(7));
+            estacion = new Estaciones(c.getInt(0), c.getString(1),
+                    c.getString(2), c.getString(3), c.getString(4),
+                    c.getString(5), c.getInt(6), c.getInt(7), c.getInt(8), c.getInt(9));
+            lista_estaciones.add(estacion);
+            //lista_usuarios.add(concatenado);
+            } while (c.moveToNext());
+        }
+        db.close();
+        c.close();
+
+        return lista_estaciones;
+    }
+    //Recuperamos las estaciones correspondientes a una ciudad.
     public Estaciones obtenerESTACIONporUID(String ciudad,String uid) {
         SQLiteDatabase db = getReadableDatabase();
         //ArrayList<String> lista_usuarios = new ArrayList<String>();
