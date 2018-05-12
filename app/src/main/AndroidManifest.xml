@@ -16,9 +16,9 @@
         android:name=".PracticaServiciosWebApplication"
         android:allowBackup="true"
         android:debuggable="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/spbikeinicio"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/spbikeinicio"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".InicioActivity">
@@ -44,9 +44,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key2" />
 
-        <activity
-            android:name=".MapsActivity2"
-            android:label="@string/title_activity_maps2"></activity>
     </application>
 
 </manifest>

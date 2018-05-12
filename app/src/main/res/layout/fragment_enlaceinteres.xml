@@ -1,14 +1,87 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dam.spbike.PrincipalFragment">
+    tools:context="com.dam.spbike.MainActivity"
+    android:orientation="horizontal">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Enlaces de Interes"
-        android:textSize="36sp" />
 
-</FrameLayout>
+
+    <TextView
+        android:id="@+id/texto_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Se dejan algunos links de interes con las paginas de las empresas que llevan el servicio de biciletas en cada ciudad."
+        android:textSize="17sp"
+        android:layout_marginBottom="30dp"/>
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="105dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="60dp"
+        android:src="@mipmap/ic_sevici"
+        app:layout_constraintTop_toBottomOf="@+id/texto_desc"
+        app:layout_goneMarginTop="9dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="88dp"
+        android:layout_height="93dp"
+        android:layout_marginTop="60dp"
+        android:src="@mipmap/ic_bicimad"
+        app:layout_constraintLeft_toLeftOf="@+id/imageButton3"
+        app:layout_constraintRight_toRightOf="@id/imageButton5"
+        app:layout_constraintTop_toBottomOf="@+id/texto_desc" />
+
+    <ImageButton
+        android:id="@+id/imageButton5"
+        android:layout_width="99dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="60dp"
+        android:src="@mipmap/ic_bicing"
+        app:layout_constraintRight_toRightOf="@+id/texto_desc"
+        app:layout_constraintTop_toBottomOf="@+id/texto_desc" />
+
+    <TextView
+        android:id="@+id/texto_act"
+        android:layout_width="382dp"
+        android:layout_height="25dp"
+        android:text="Noticias de actualidad"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
+        android:layout_marginTop="50dp"
+        />
+
+    <ImageButton
+        android:id="@+id/imageButton6"
+        android:layout_width="80dp"
+        android:layout_height="76dp"
+        android:layout_marginTop="60dp"
+        android:src="@mipmap/ic_elpais"
+        app:layout_constraintTop_toBottomOf="@+id/texto_act"
+        app:layout_goneMarginTop="9dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton7"
+        android:layout_width="87dp"
+        android:layout_height="79dp"
+        android:layout_marginTop="60dp"
+        android:src="@mipmap/ic_larazon"
+        app:layout_constraintLeft_toLeftOf="@+id/imageButton3"
+        app:layout_constraintRight_toRightOf="@id/imageButton5"
+        app:layout_constraintTop_toBottomOf="@+id/texto_act" />
+
+    <ImageButton
+        android:id="@+id/imageButton8"
+        android:layout_width="78dp"
+        android:layout_height="76dp"
+        android:layout_marginTop="60dp"
+        android:src="@mipmap/ic_elmundo"
+        app:layout_constraintRight_toRightOf="@+id/texto_desc"
+        app:layout_constraintTop_toBottomOf="@+id/texto_act" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 
-public class EnlacesIntFragment extends Fragment {
+public class ContactoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_enlaceinteres, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_contacto, container, false);
+/*
         ImageButton sevici = (ImageButton) view.findViewById(R.id.imageButton3);
         ImageButton bicimad = (ImageButton) view.findViewById(R.id.imageButton4);
         ImageButton bicing = (ImageButton) view.findViewById(R.id.imageButton5);
@@ -67,6 +67,7 @@ public class EnlacesIntFragment extends Fragment {
                 startActivity(intent);
             }
         });
-    return view;
+        */
+        return view;
     }
 }

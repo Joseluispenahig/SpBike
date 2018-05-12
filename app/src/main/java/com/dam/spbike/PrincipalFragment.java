@@ -33,6 +33,7 @@ public class PrincipalFragment extends Fragment {
     private View vista;
     Usuarios usuarioinicio;
     String escogidaciudad;
+    String escogidaestacionspinner;
     String escogidaestacion;
     Estaciones estacionseleccionada;
     EditText edit_ident;
@@ -96,7 +97,7 @@ public class PrincipalFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // your code here
                 MainActivity.opcionb = parentView.getItemAtPosition(position).toString();
-                escogidaestacion= estaciones[position].substring(3);
+                escogidaestacionspinner= estaciones[position];
             }
 
             @Override
@@ -112,6 +113,8 @@ public class PrincipalFragment extends Fragment {
                     estacionseleccionada=MDB.obtenerESTACIONporUID(escogidaciudad,identificador);
                 }
                 else {
+                    String [] descompuesta=escogidaestacionspinner.split("\\. ");
+                    escogidaestacion=descompuesta[1];
                     estacionseleccionada = MDB.obtenerESTACION(escogidaciudad, escogidaestacion);
                 }
                 Intent intent = new Intent(getContext(), MapsActivity.class);

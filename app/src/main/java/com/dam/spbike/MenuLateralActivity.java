@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +19,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 public class MenuLateralActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,6 +42,27 @@ public class MenuLateralActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Log.i("Send email", "");
+
+                String[] TO = {"esspbike@gmail.com"};
+                //String[] CC = {"xyz@gmail.com"};
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                emailIntent.setData(Uri.parse("mailto:"));
+                emailIntent.setType("text/plain");
+
+
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+               // emailIntent.putExtra(Intent.EXTRA_CC, CC);
+               // emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
+              //  emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
+
+                try {
+                    startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+                    Log.i("Finished sending email...", "");
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(MenuLateralActivity.this,
+                            "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -127,15 +152,15 @@ public class MenuLateralActivity extends AppCompatActivity
             // Handle the camera action
             fragmentManager.beginTransaction().replace(R.id.contenedor,new PrincipalFragment()).commit();
         } else if (id == R.id.nav_gallery) {
-            fragmentManager.beginTransaction().replace(R.id.contenedor,new EnlacesIntFragment()).commit();
+            //fragmentManager.beginTransaction().replace(R.id.contenedor,new MapsFragments()).commit();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
-
+            fragmentManager.beginTransaction().replace(R.id.contenedor,new EnlacesIntFragment()).commit();
         } else if (id == R.id.nav_send) {
-
+            fragmentManager.beginTransaction().replace(R.id.contenedor,new ContactoFragment()).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

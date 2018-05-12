@@ -3,8 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="48dp">
+    android:padding="45dp">
 
+    <ImageView
+        android:id="@+id/imageButton3"
+        android:layout_width="184dp"
+        android:layout_height="91dp"
+        android:layout_gravity="center"
+        android:src="@drawable/spbikeinicio"
+
+        />
+    <!--
     <TextView
         android:id="@+id/texto_conectar"
         android:layout_width="wrap_content"
@@ -13,7 +22,7 @@
         android:layout_weight="1"
         android:text="SPBIKE"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+-->
     <EditText
         android:id="@+id/input_usuario"
         android:layout_width="match_parent"
@@ -41,7 +50,7 @@
         android:layout_weight="1"
         android:text="Iniciar Sesion"
         android:onClick="IrActividadPrincipal"/>
-
+<!--
     <Button
         android:id="@+id/boton_prueba"
         style="?android:attr/buttonStyleSmall"
@@ -51,6 +60,7 @@
         android:layout_weight="1"
         android:text="Prueba"
         android:onClick="IrActividadPrueba"/>
+    -->
 
     <TextView
         android:id="@+id/texto_registrarse"

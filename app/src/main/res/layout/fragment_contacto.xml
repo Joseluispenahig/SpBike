@@ -1,0 +1,71 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.dam.spbike.MainActivity"
+    android:orientation="horizontal">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <ImageView
+        android:id="@+id/imageButton3"
+        android:layout_width="178dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/spbikeamp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <TextView
+        android:id="@+id/texto_cont"
+        android:layout_width="382dp"
+        android:layout_height="25dp"
+        android:text="Version: 1.0"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
+        android:layout_marginTop="50dp"
+        />
+
+    <TextView
+        android:id="@+id/texto_cont2"
+        android:layout_width="382dp"
+        android:layout_height="25dp"
+        android:text="Email: esspbike@gmail.com"
+        app:layout_constraintTop_toBottomOf="@+id/texto_cont"
+        android:layout_marginTop="20dp"
+        />
+
+
+    <TextView
+        android:id="@+id/texto_cont3"
+        android:layout_width="382dp"
+        android:layout_height="25dp"
+        android:text="Realizado por: "
+        app:layout_constraintTop_toBottomOf="@+id/texto_cont2"
+        android:layout_marginTop="20dp"
+        />
+    <TextView
+        android:id="@+id/texto_cont4"
+        android:layout_width="382dp"
+        android:layout_height="25dp"
+        android:text="José Luis Peña Higueras"
+        app:layout_constraintTop_toBottomOf="@+id/texto_cont3"
+        android:layout_marginTop="5dp"
+        android:textAlignment="center"
+
+        />
+    <TextView
+        android:id="@+id/texto_cont5"
+        android:layout_width="382dp"
+        android:layout_height="25dp"
+        android:text="Alejandro García Haro"
+        app:layout_constraintTop_toBottomOf="@+id/texto_cont4"
+        android:layout_marginTop="5dp"
+        android:textAlignment="center"
+        />
+
+
+
+</android.support.constraint.ConstraintLayout>
