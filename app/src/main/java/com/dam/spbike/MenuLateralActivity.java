@@ -152,7 +152,7 @@ public class MenuLateralActivity extends AppCompatActivity
             // Handle the camera action
             fragmentManager.beginTransaction().replace(R.id.contenedor,new PrincipalFragment()).commit();
         } else if (id == R.id.nav_gallery) {
-            //fragmentManager.beginTransaction().replace(R.id.contenedor,new MapsFragments()).commit();
+            fragmentManager.beginTransaction().replace(R.id.contenedor,new MapsActivity2()).commit();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
