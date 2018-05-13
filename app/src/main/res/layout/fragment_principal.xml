@@ -55,12 +55,18 @@
 
     <EditText
         android:id="@+id/input_identificador"
-        android:layout_width="177dp"
-        android:layout_height="31dp"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:layout_weight="1"
-        tools:layout_editor_absoluteX="191dp"
-        tools:layout_editor_absoluteY="218dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/spinner3" />
 
     <Button
         android:id="@+id/button"
@@ -77,10 +83,13 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="35dp"
         android:text="Identificador de Parada"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="230dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner3" />
 
 </android.support.constraint.ConstraintLayout>

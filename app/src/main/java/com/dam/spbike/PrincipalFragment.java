@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class PrincipalFragment extends Fragment {
     String escogidaestacion;
     Estaciones estacionseleccionada;
     EditText edit_ident;
+    TextView ident;
     String identificador;
 
     @Override
@@ -55,7 +57,7 @@ public class PrincipalFragment extends Fragment {
         ciudadesBD.add(0, "Seleccionar");
         ciudades = new String[ciudadesBD.size()];
         ciudades = ciudadesBD.toArray(ciudades);
-
+        ident = (TextView) view.findViewById(R.id.textView);
         edit_ident = (EditText) view.findViewById(R.id.input_identificador);
         //Spinner spinner1=(Spinner) view.findViewById(R.id.spinner1);
         Spinner spinner2 = (Spinner) view.findViewById(R.id.spinner2);
