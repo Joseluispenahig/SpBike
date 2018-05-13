@@ -131,6 +131,19 @@ public class MapsActivity2 extends Fragment implements OnMapReadyCallback{
                 startActivity(intent);
             }
         });
+
+        mMap.setOnInfoWindowClickListener( new GoogleMap.OnInfoWindowClickListener(){
+            @Override
+            public void onInfoWindowClick(Marker marker){
+                Intent intent = new Intent(getContext(), MapsActivity.class);
+                Estaciones estacionseleccionada2 = MDB.obtenerESTACION(escogidaciudad.toString(),marker.getTitle().toString());
+                intent.putExtra("ciudad", estacionseleccionada2.getCiudad());
+                intent.putExtra("estacion", estacionseleccionada2.getNombre());
+                intent.putExtra("parametro", PrincipalFragment.usuarioinicio);
+                intent.putExtra("estaciones", estacionseleccionada2);
+                startActivity(intent);
+            }
+        });
         //else if(escogidaciudad==null);
     }
 }

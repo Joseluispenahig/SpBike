@@ -32,7 +32,7 @@ public class PrincipalFragment extends Fragment {
     String[] ciudades, estaciones;
     private MiBaseDatos MDB;
     private View vista;
-    Usuarios usuarioinicio;
+    static Usuarios usuarioinicio;
     String escogidaciudad;
     String escogidaestacionspinner;
     String escogidaestacion;
