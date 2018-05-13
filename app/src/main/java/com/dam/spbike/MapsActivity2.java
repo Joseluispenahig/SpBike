@@ -111,7 +111,7 @@ public class MapsActivity2 extends Fragment implements OnMapReadyCallback{
                     // Add a marker in Sydney and move the camera
                     //estacionseleccionada=MDB.obtenerESTACIONESPORCIUDAD(escogidaciudad.toString());
                     LatLng posicion = new LatLng(Double.parseDouble(estacionseleccionada.get(i).getLatitude().toString()), Double.parseDouble(estacionseleccionada.get(i).getLongitude().toString()));
-                    mMap.addMarker(new MarkerOptions().position(posicion).title(estacionseleccionada.get(i).getNombre()));
+                    mMap.addMarker(new MarkerOptions().position(posicion).title(estacionseleccionada.get(i).getNombre()).snippet("Disponibles " +estacionseleccionada.get(i).getLibres()));
                 }
                 if(escogidaciudad.equalsIgnoreCase("Madrid")){
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Madrid,13));
