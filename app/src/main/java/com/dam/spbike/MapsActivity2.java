@@ -33,18 +33,22 @@ public class MapsActivity2 extends Fragment implements OnMapReadyCallback{
     ArrayList<Estaciones> estacionseleccionada;
     LatLng Sevilla;
     LatLng Madrid;
+    LatLng Santander;
+    LatLng Valencia;
 
     //@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_maps2);
-        final View view = inflater.inflate(R.layout.activity_maps2, container, false);
+        final View view = inflater.inflate(R.layout.fragment_maps2, container, false);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView);
         mapFragment.getMapAsync(this);
         Sevilla=new LatLng(37.3890431,-5.9844864);
         Madrid=new LatLng(40.4168702,-3.7037499);
+        Santander= new LatLng(43.4623433,-3.8103373);
+        Valencia=new LatLng(39.4721485,-0.3795534);
 
         MDB = new MiBaseDatos(getContext().getApplicationContext());
         ciudadesBD = MDB.obtenerCIUDADES();
@@ -113,12 +117,20 @@ public class MapsActivity2 extends Fragment implements OnMapReadyCallback{
                     LatLng posicion = new LatLng(Double.parseDouble(estacionseleccionada.get(i).getLatitude().toString()), Double.parseDouble(estacionseleccionada.get(i).getLongitude().toString()));
                     mMap.addMarker(new MarkerOptions().position(posicion).title(estacionseleccionada.get(i).getNombre()).snippet("Disponibles " +estacionseleccionada.get(i).getLibres()));
                 }
+                switch (escogidaciudad.toLowerCase()){
+                    case "madrid": mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Madrid,13));break;
+                    case "sevilla": mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Sevilla,13));break;
+                    case "santander": mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Santander,13));break;
+                    case "valencia": mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Valencia,13));break;
+                }
+                /*
                 if(escogidaciudad.equalsIgnoreCase("Madrid")){
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Madrid,13));
                 }
                 else{
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Sevilla,13));
                 }
+                */
             }
         }
         mMap.setOnInfoWindowLongClickListener(new GoogleMap.OnInfoWindowLongClickListener() {

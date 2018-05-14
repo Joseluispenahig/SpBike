@@ -80,6 +80,9 @@ public class PruebaActivity extends Activity {
             List<String> supplierNames = new ArrayList<String>();
             supplierNames.add("sevici");
             supplierNames.add("bicimad");
+            supplierNames.add("valenbisi");
+            supplierNames.add("tusbic");
+
             System.out.println(supplierNames.get(0));
             System.out.println(supplierNames.get(1));
             //Ponemos el contador de identificadores a 0

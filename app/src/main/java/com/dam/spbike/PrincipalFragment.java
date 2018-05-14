@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -110,22 +111,35 @@ public class PrincipalFragment extends Fragment {
         enviar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 identificador = edit_ident.getText().toString();
-                if(identificador.length()>0){
-                    //Busca por uid y escogidaciudad
-                    estacionseleccionada=MDB.obtenerESTACIONporUID(escogidaciudad,identificador);
-                }
-                else {
-                    String [] descompuesta=escogidaestacionspinner.split("\\. ");
-                    escogidaestacion=descompuesta[1];
-                    estacionseleccionada = MDB.obtenerESTACION(escogidaciudad, escogidaestacion);
-                }
-                Intent intent = new Intent(getContext(), MapsActivity.class);
-                intent.putExtra("ciudad", MainActivity.opciona);
-                intent.putExtra("estacion", MainActivity.opcionb);
-                intent.putExtra("parametro", usuarioinicio);
-                intent.putExtra("estaciones", estacionseleccionada);
-                startActivity(intent);
+                if(escogidaciudad != "Seleccionar")
+                {
+                    if(identificador.length()<=0 && ((escogidaestacionspinner.equals("Seleccionar")))){
+                        Toast.makeText(view.getContext(),
+                                "Datos Incorrectos", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        if (identificador.length() > 0 && escogidaestacionspinner.equals("Seleccionar")) {
+                            //Busca por uid y escogidaciudad
+                            estacionseleccionada = MDB.obtenerESTACIONporUID(escogidaciudad, identificador);
+                        } else {
+                            String[] descompuesta = escogidaestacionspinner.split("\\. ");
+                            escogidaestacion = descompuesta[1];
+                            estacionseleccionada = MDB.obtenerESTACION(escogidaciudad, escogidaestacion);
 
+                        }
+                        Intent intent = new Intent(getContext(), MapsActivity.class);
+                        intent.putExtra("ciudad", MainActivity.opciona);
+                        intent.putExtra("estacion", MainActivity.opcionb);
+                        intent.putExtra("parametro", usuarioinicio);
+                        intent.putExtra("estaciones", estacionseleccionada);
+                        startActivity(intent);
+                    }
+
+                }
+                else{
+                    Toast.makeText(view.getContext(),
+                            "Datos Incorrectos", Toast.LENGTH_LONG).show();
+                }
             }
         });
         return view;

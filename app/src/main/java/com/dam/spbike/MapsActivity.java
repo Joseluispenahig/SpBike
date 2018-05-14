@@ -124,10 +124,10 @@ public class MapsActivity extends FragmentActivity implements
     }*/
 
     public void Reservar(View view) {
-        mMap.clear();
         actualizalibresreservadas();
         //Condicion de que se realize la reserva si hay bicicletas disponibles o el usuario no haya reservado
         if(MDB.obtenerReserva(usuarioinicio.getId())==0 && disponibles > 0) {
+            mMap.clear();
             System.out.println("Realiza la reserva");
             //Metodo en base de datos que actualizara los la variable reservada en BD
             MDB.modificarreservaUSUARIO(usuarioinicio.getId(),1);
@@ -148,11 +148,11 @@ public class MapsActivity extends FragmentActivity implements
         bicic_disp.setText("Bicicletas disponibles: " + disponibles);
     }
     public void CancelarReserva(View view) {
-        mMap.clear();
         libres=MDB.obtenerLibres(estacion.getId());
         reservadas=MDB.obtenerReservadas(estacion.getId());
         //Condicion de que se realize cancele la reserva si el usuario no haya reservado
         if(MDB.obtenerReserva(usuarioinicio.getId())==1) {
+            mMap.clear();
             System.out.println("Cancela la reserva");
             //Metodo en base de datos que actualizara los la variable reservada en BD
             MDB.modificarreservaUSUARIO(usuarioinicio.getId(),0);
@@ -177,8 +177,12 @@ public class MapsActivity extends FragmentActivity implements
         List<String> supplierNames = new ArrayList<String>();
         supplierNames.add("sevici");
         supplierNames.add("bicimad");
+        supplierNames.add("valenbisi");
+        supplierNames.add("tusbic");
+
         System.out.println(supplierNames.get(0));
         System.out.println(supplierNames.get(1));
+        System.out.println(supplierNames.get(2));
         //Ponemos el contador de identificadores a 0
         id = 0;
 

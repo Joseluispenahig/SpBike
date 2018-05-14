@@ -5,14 +5,13 @@
     android:orientation="vertical"
     android:padding="48dp">
 
-    <TextView
-        android:id="@+id/texto_conectar"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
-        android:text="SPBIKE"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <ImageView
+    android:id="@+id/imageButton3"
+    android:layout_width="184dp"
+    android:layout_height="91dp"
+    android:layout_gravity="center"
+    android:src="@drawable/spbikeinicio"
+    />
 
     <EditText
         android:id="@+id/input_nombre"
