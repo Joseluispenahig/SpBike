@@ -40,8 +40,7 @@ public class MenuLateralActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
                 Log.i("Send email", "");
 
                 String[] TO = {"esspbike@gmail.com"};
@@ -58,7 +57,7 @@ public class MenuLateralActivity extends AppCompatActivity
 
                 try {
                     startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-                    Log.i("Finished sending email...", "");
+                    Log.i("Finished sending email", "");
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(MenuLateralActivity.this,
                             "There is no email client installed.", Toast.LENGTH_SHORT).show();

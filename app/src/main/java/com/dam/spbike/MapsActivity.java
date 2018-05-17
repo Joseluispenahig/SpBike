@@ -2,6 +2,7 @@ package com.dam.spbike;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -30,6 +31,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -51,12 +53,20 @@ public class MapsActivity extends FragmentActivity implements
     TextView bicic_disp;
     int id;
     LatLng PosEstacion;
+    private static final long START_TIME_IN_MILLIS = 30000;
+    private TextView mTextViewCountDown;
+    private CountDownTimer mCountDownTimer;
+    private boolean mTimerRunning;
+
+    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        final ImageButton refrescar=(ImageButton) findViewById(R.id.imageButton);
+        final ImageButton refrescar = (ImageButton) findViewById(R.id.imageButton);
+        mTextViewCountDown = findViewById(R.id.text_view_countdown);
+        mTextViewCountDown.setVisibility(View.INVISIBLE);
         refrescar.bringToFront();
         refrescar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,19 +81,19 @@ public class MapsActivity extends FragmentActivity implements
         MDB = new MiBaseDatos(getApplicationContext());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-       // SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
-        MapFragment mapFragment =  (MapFragment)getFragmentManager().findFragmentById(R.id.mapView);
+        // SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapView);
         mapFragment.getMapAsync(this);
 
-        usuarioinicio=  (Usuarios) getIntent().getExtras().getSerializable("parametro");
-        System.out.println("Usuario que ha iniciado sesion: " + usuarioinicio.getNombre() + " "+ usuarioinicio.getApellido() + " " + usuarioinicio.getEmail());
+        usuarioinicio = (Usuarios) getIntent().getExtras().getSerializable("parametro");
+        System.out.println("Usuario que ha iniciado sesion: " + usuarioinicio.getNombre() + " " + usuarioinicio.getApellido() + " " + usuarioinicio.getEmail());
         //Obtenemos el objeto que se ha pasado de la actividad Main.
-        estacion=  (Estaciones) getIntent().getExtras().getSerializable("estaciones");
+        estacion = (Estaciones) getIntent().getExtras().getSerializable("estaciones");
         System.out.println("Estacion seleccionada: " + estacion.getCiudad() + " " + estacion.getNombre());
 
-        libres=MDB.obtenerLibres(estacion.getId());
-        reservadas=MDB.obtenerReservadas(estacion.getId());
-        disponibles=libres-reservadas;
+        libres = MDB.obtenerLibres(estacion.getId());
+        reservadas = MDB.obtenerReservadas(estacion.getId());
+        disponibles = libres - reservadas;
         bicic_disp = (TextView) findViewById(R.id.disponibles);
         bicic_disp.setText("Bicicletas disponibles: " + disponibles);
     }
@@ -104,8 +114,8 @@ public class MapsActivity extends FragmentActivity implements
 
         // Add a marker in Sydney and move the camera
         PosEstacion = new LatLng(Double.parseDouble(estacion.getLatitude()), Double.parseDouble(estacion.getLongitude()));
-        mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion "+estacion.getNombre()).snippet("Disponibles: "+ disponibles));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PosEstacion,18));
+        mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion " + estacion.getNombre()).snippet("Disponibles: " + disponibles));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PosEstacion, 18));
         mMap.setOnInfoWindowLongClickListener(new OnInfoWindowLongClickListener() {
             @Override
             public void onInfoWindowLongClick(Marker marker) {
@@ -124,54 +134,57 @@ public class MapsActivity extends FragmentActivity implements
     }*/
 
     public void Reservar(View view) {
+
         actualizalibresreservadas();
         //Condicion de que se realize la reserva si hay bicicletas disponibles o el usuario no haya reservado
-        if(MDB.obtenerReserva(usuarioinicio.getId())==0 && disponibles > 0) {
+        if (MDB.obtenerReserva(usuarioinicio.getId()) == 0 && disponibles > 0) {
             mMap.clear();
             System.out.println("Realiza la reserva");
             //Metodo en base de datos que actualizara los la variable reservada en BD
-            MDB.modificarreservaUSUARIO(usuarioinicio.getId(),1);
+            MDB.modificarreservaUSUARIO(usuarioinicio.getId(), 1);
             reservadas++;
-            MDB.modificarreservadaESTACION(estacion.getId(),reservadas);
+            MDB.modificarreservadaESTACION(estacion.getId(), reservadas);
             usuarioinicio.setReservada(1);
             estacion.setReservadas(reservadas);
-            disponibles=libres-reservadas;
-            mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion "+estacion.getNombre()).snippet("Disponibles: "+ disponibles));
+            disponibles = libres - reservadas;
+            mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion " + estacion.getNombre()).snippet("Disponibles: " + disponibles));
             Toast.makeText(getApplicationContext(),
                     "Se ha realizado la reserva correctamente", Toast.LENGTH_SHORT).show();
-        }
-        else{
+            startTimer();
+        } else {
             System.out.println("No se puede realizar la reserva");
             Toast.makeText(getApplicationContext(),
                     "No se puede realizar la reserva", Toast.LENGTH_SHORT).show();
         }
         bicic_disp.setText("Bicicletas disponibles: " + disponibles);
     }
+
     public void CancelarReserva(View view) {
-        libres=MDB.obtenerLibres(estacion.getId());
-        reservadas=MDB.obtenerReservadas(estacion.getId());
+        libres = MDB.obtenerLibres(estacion.getId());
+        reservadas = MDB.obtenerReservadas(estacion.getId());
         //Condicion de que se realize cancele la reserva si el usuario no haya reservado
-        if(MDB.obtenerReserva(usuarioinicio.getId())==1) {
+        if (MDB.obtenerReserva(usuarioinicio.getId()) == 1) {
             mMap.clear();
             System.out.println("Cancela la reserva");
             //Metodo en base de datos que actualizara los la variable reservada en BD
-            MDB.modificarreservaUSUARIO(usuarioinicio.getId(),0);
+            MDB.modificarreservaUSUARIO(usuarioinicio.getId(), 0);
             usuarioinicio.setReservada(0);
             reservadas--;
-            MDB.modificarreservadaESTACION(estacion.getId(),reservadas);
+            MDB.modificarreservadaESTACION(estacion.getId(), reservadas);
             estacion.setReservadas(reservadas);
-            disponibles=libres-reservadas;
-            mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion "+estacion.getNombre()).snippet("Disponibles: "+ disponibles));
+            disponibles = libres - reservadas;
+            mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion " + estacion.getNombre()).snippet("Disponibles: " + disponibles));
             Toast.makeText(getApplicationContext(),
                     "Se ha cancelado la reserva", Toast.LENGTH_SHORT).show();
-        }
-        else{
+            resetTimer();
+        } else {
             System.out.println("No tiene realizada ninguna reserva");
             Toast.makeText(getApplicationContext(),
                     "No tiene realizada ninguna reserva", Toast.LENGTH_SHORT).show();
         }
         bicic_disp.setText("Bicicletas disponibles: " + disponibles);
     }
+
     public void actualizardatosAPI(View view) {
         mMap.clear();
         List<String> supplierNames = new ArrayList<String>();
@@ -220,7 +233,7 @@ public class MapsActivity extends FragmentActivity implements
                                     String longitude = estacions.getString("longitude");
                                     String uids = estacions.getJSONObject("extra").getString("uid");
                                     String cantidads = estacions.getJSONObject("extra").getString("slots");
-                                    String libresAPI=estacions.getString("free_bikes");
+                                    String libresAPI = estacions.getString("free_bikes");
 
                                     int uid = Integer.parseInt(uids);
                                     int cantidad = Integer.parseInt(cantidads);
@@ -228,14 +241,14 @@ public class MapsActivity extends FragmentActivity implements
                                     int libres = Integer.parseInt(libresAPI);
                                     int reservadas = 0;
 
-                                   // System.out.println(ident + " " + nombre + " " + direccion + " " + latitude + " " + longitude + " " + cantidads + " " + uids + " " + Integer.toString(libres) + " " + Integer.toString(reservadas));
-                                    if(estacion.getNombre().equals(nombre) && estacion.getCiudad().equals(ciudad)) {
+                                    // System.out.println(ident + " " + nombre + " " + direccion + " " + latitude + " " + longitude + " " + cantidads + " " + uids + " " + Integer.toString(libres) + " " + Integer.toString(reservadas));
+                                    if (estacion.getNombre().equals(nombre) && estacion.getCiudad().equals(ciudad)) {
                                         //Insertamos en BD
                                         System.out.println(ident + " " + nombre + " " + direccion + " " + latitude + " " + longitude + " " + cantidads + " " + uids + " " + Integer.toString(libres) + " " + Integer.toString(reservadas));
                                         MDB.insertarESTACION(nombre, direccion, latitude, longitude, ciudad, uid, cantidad, libres, reservadas);
                                         actualizalibresreservadas();
                                         bicic_disp.setText("Bicicletas disponibles: " + disponibles);
-                                        mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion "+estacion.getNombre()).snippet("Disponibles: "+ disponibles));
+                                        mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion " + estacion.getNombre()).snippet("Disponibles: " + disponibles));
                                     }
                                 }
                                 //Usando opción 2:
@@ -267,15 +280,15 @@ public class MapsActivity extends FragmentActivity implements
             PracticaServiciosWebApplication.getInstance().getRequestQueue().add(request);
         }
         //Timer para que cambie a otra actividad cada cierto 5000 ms (5s)
-       // new Timer().schedule(new TimerTask(){
-       //     public void run() {
-       //         InicioActivity.this.runOnUiThread(new Runnable() {
-       //             public void run() {
-       //                 startActivity(new Intent(InicioActivity.this, MainActivity.class));
-       //             }
-       //         });
-       //     }
-       // }, 5000);
+        // new Timer().schedule(new TimerTask(){
+        //     public void run() {
+        //         InicioActivity.this.runOnUiThread(new Runnable() {
+        //             public void run() {
+        //                 startActivity(new Intent(InicioActivity.this, MainActivity.class));
+        //             }
+        //         });
+        //     }
+        // }, 5000);
        /* new CountDownTimer(20000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -296,10 +309,50 @@ public class MapsActivity extends FragmentActivity implements
 
 
     }
-    public void actualizalibresreservadas()
-    {
-        libres=MDB.obtenerLibres(estacion.getId());
-        reservadas=MDB.obtenerReservadas(estacion.getId());
-        disponibles=libres-reservadas;
+
+    public void actualizalibresreservadas() {
+        libres = MDB.obtenerLibres(estacion.getId());
+        reservadas = MDB.obtenerReservadas(estacion.getId());
+        disponibles = libres - reservadas;
+    }
+
+    private void updateCountDownText() {
+        int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
+        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
+
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+
+        mTextViewCountDown.setText(timeLeftFormatted);
+    }
+
+    private void startTimer() {
+        mTextViewCountDown.setVisibility(View.VISIBLE);
+        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mTimeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                mTimerRunning = false;
+                //Metodo en base de datos que actualizara los la variable reservada en BD
+                MDB.modificarreservaUSUARIO(usuarioinicio.getId(), 0);
+                usuarioinicio.setReservada(0);
+                reservadas--;
+                MDB.modificarreservadaESTACION(estacion.getId(), reservadas);
+                disponibles = libres - reservadas;
+                Toast.makeText(getApplicationContext(),
+                        "Ha sobrepasado el tiempo de reserva y se ha cancelado", Toast.LENGTH_SHORT).show();
+                bicic_disp.setText("Bicicletas disponibles: " + disponibles);
+                resetTimer();
+            }
+        }.start();
+    }
+    private void resetTimer() {
+        mTimeLeftInMillis = START_TIME_IN_MILLIS;
+        updateCountDownText();
+        mTextViewCountDown.setVisibility(View.INVISIBLE);
     }
 }
