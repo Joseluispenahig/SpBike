@@ -19,52 +19,69 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
+
     <TextView
         android:id="@+id/texto_cont"
         android:layout_width="382dp"
-        android:layout_height="25dp"
-        android:text="Version: 1.0"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="50dp"
-        />
+        android:text="Version: 1.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
 
     <TextView
         android:id="@+id/texto_cont2"
         android:layout_width="382dp"
-        android:layout_height="25dp"
-        android:text="Email: esspbike@gmail.com"
-        app:layout_constraintTop_toBottomOf="@+id/texto_cont"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        />
+        android:text="Email: esspbike@gmail.com"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/texto_cont" />
 
 
     <TextView
         android:id="@+id/texto_cont3"
         android:layout_width="382dp"
-        android:layout_height="25dp"
-        android:text="Realizado por: "
-        app:layout_constraintTop_toBottomOf="@+id/texto_cont2"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        />
+        android:text="Realizado por: "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/texto_cont2" />
+
     <TextView
         android:id="@+id/texto_cont4"
         android:layout_width="382dp"
-        android:layout_height="25dp"
-        android:text="José Luis Peña Higueras"
-        app:layout_constraintTop_toBottomOf="@+id/texto_cont3"
+        android:layout_height="0dp"
         android:layout_marginTop="5dp"
+        android:text="José Luis Peña Higueras"
         android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/texto_cont3"
 
         />
+
     <TextView
         android:id="@+id/texto_cont5"
         android:layout_width="382dp"
-        android:layout_height="25dp"
-        android:text="Alejandro García Haro"
-        app:layout_constraintTop_toBottomOf="@+id/texto_cont4"
+        android:layout_height="0dp"
         android:layout_marginTop="5dp"
+        android:text="Alejandro García Haro"
         android:textAlignment="center"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/texto_cont4" />
 
 
 

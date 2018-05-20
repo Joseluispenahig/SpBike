@@ -152,11 +152,11 @@ public class MenuLateralActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.contenedor,new PrincipalFragment()).commit();
         } else if (id == R.id.nav_gallery) {
             fragmentManager.beginTransaction().replace(R.id.contenedor,new MapsActivity2()).commit();
-        } else if (id == R.id.nav_slideshow) {
+        }/* else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+        } */else if (id == R.id.nav_share) {
             fragmentManager.beginTransaction().replace(R.id.contenedor,new EnlacesIntFragment()).commit();
         } else if (id == R.id.nav_send) {
             fragmentManager.beginTransaction().replace(R.id.contenedor,new ContactoFragment()).commit();
