@@ -30,6 +30,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="50dp"
         android:text="Version: 1.0"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
@@ -44,6 +45,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:text="Email: esspbike@gmail.com"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/texto_cont" />
@@ -59,6 +61,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:text="Realizado por: "
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/texto_cont2" />
@@ -67,7 +70,7 @@
         android:id="@+id/texto_cont4"
         android:layout_width="382dp"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:text="José Luis Peña Higueras"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@+id/texto_cont3"
@@ -78,7 +81,7 @@
         android:id="@+id/texto_cont5"
         android:layout_width="382dp"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:text="Alejandro García Haro"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@+id/texto_cont4" />

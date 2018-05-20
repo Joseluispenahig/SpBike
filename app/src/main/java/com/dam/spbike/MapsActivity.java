@@ -176,6 +176,7 @@ public class MapsActivity extends FragmentActivity implements
             mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion " + estacion.getNombre()).snippet("Disponibles: " + disponibles));
             Toast.makeText(getApplicationContext(),
                     "Se ha cancelado la reserva", Toast.LENGTH_SHORT).show();
+            pauseTimer();
             resetTimer();
         } else {
             System.out.println("No tiene realizada ninguna reserva");
@@ -354,5 +355,9 @@ public class MapsActivity extends FragmentActivity implements
         mTimeLeftInMillis = START_TIME_IN_MILLIS;
         updateCountDownText();
         mTextViewCountDown.setVisibility(View.INVISIBLE);
+    }
+    private void pauseTimer() {
+        mCountDownTimer.cancel();
+        mTimerRunning = false;
     }
 }

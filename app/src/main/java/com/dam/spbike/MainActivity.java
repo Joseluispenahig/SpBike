@@ -60,4 +60,6 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, PruebaActivity.class);
         startActivity(intent);
     }
+    public void onBackPressed(){
+    }
 }

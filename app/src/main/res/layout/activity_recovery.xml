@@ -50,7 +50,7 @@
         android:ems="10"
         android:hint="Escriba Contraseña"
         android:inputType="textPassword"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <EditText
         android:id="@+id/input_contrasena2"
@@ -70,10 +70,9 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:text="Cambiar clave"
         android:onClick="IrCambiar"
-        android:visibility="invisible"
-        />
+        android:text="Cambiar clave"
+        android:visibility="invisible" />
 
 
 </LinearLayout>

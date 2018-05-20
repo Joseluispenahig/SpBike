@@ -22,8 +22,8 @@ public class EnlacesIntFragment extends Fragment {
         ImageButton bicimad = (ImageButton) view.findViewById(R.id.imageButton4);
         ImageButton bicing = (ImageButton) view.findViewById(R.id.imageButton5);
         ImageButton elpais = (ImageButton) view.findViewById(R.id.imageButton6);
-        ImageButton elmundo = (ImageButton) view.findViewById(R.id.imageButton7);
-        ImageButton larazon = (ImageButton) view.findViewById(R.id.imageButton8);
+        ImageButton larazon = (ImageButton) view.findViewById(R.id.imageButton7);
+        ImageButton elmundo = (ImageButton) view.findViewById(R.id.imageButton8);
 
         sevici.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
