@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="45dp">
+    android:padding="45dp"
+    android:background="@drawable/carrilbiciverde">
 
     <ImageView
         android:id="@+id/imageButton3"

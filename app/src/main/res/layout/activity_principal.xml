@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dam.spbike.MainActivity">
+    tools:context="com.dam.spbike.MainActivity"
+    >
 
     <Spinner
         android:id="@+id/spinner2"
@@ -15,7 +16,8 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/localidad" />
+        app:layout_constraintTop_toBottomOf="@+id/localidad"
+        />
 
     <Spinner
         android:id="@+id/spinner3"

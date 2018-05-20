@@ -204,8 +204,6 @@ public class MapsActivity extends FragmentActivity implements
             System.out.println(supplierNames.get(i));
             final String URL = "http://api.citybik.es/v2/networks/" + supplierNames.get(i);
 
-            //final ProgressDialog dlg = ProgressDialog.show(this,
-            //        "Obteniendo los datos REST", "Por favor, espere...", true);
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, (String) null,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -252,16 +250,6 @@ public class MapsActivity extends FragmentActivity implements
                                         mMap.addMarker(new MarkerOptions().position(PosEstacion).title("Estacion " + estacion.getNombre()).snippet("Disponibles: " + disponibles));
                                     }
                                 }
-                                //Usando opción 2:
-                                //String hostExists = response.getString("valid");
-
-                                //if (ciudad == "true") {
-                                //   //El email es correcto Toast toast1 =
-                                //    Toast.makeText(getApplicationContext(), "Email correcto", Toast.LENGTH_SHORT).show();
-                                //} else {
-                                //    //El email es incorrecto
-                                //    Toast.makeText(getApplicationContext(), "Email erróneo", Toast.LENGTH_SHORT).show();
-                                //}
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -271,8 +259,6 @@ public class MapsActivity extends FragmentActivity implements
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    //dlg.dismiss();
-                    // mTextView.setText(error.toString());
                     VolleyLog.e("Error: ", error.getMessage());
                 }
             });
@@ -280,35 +266,6 @@ public class MapsActivity extends FragmentActivity implements
             // add the request object to the queue to be executed
             PracticaServiciosWebApplication.getInstance().getRequestQueue().add(request);
         }
-        //Timer para que cambie a otra actividad cada cierto 5000 ms (5s)
-        // new Timer().schedule(new TimerTask(){
-        //     public void run() {
-        //         InicioActivity.this.runOnUiThread(new Runnable() {
-        //             public void run() {
-        //                 startActivity(new Intent(InicioActivity.this, MainActivity.class));
-        //             }
-        //         });
-        //     }
-        // }, 5000);
-       /* new CountDownTimer(20000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                System.out.println("seconds remaining: " + millisUntilFinished / 1000);
-            }
-
-            public void onFinish() {
-                System.out.println("done!");
-                //Puede sernos util para la gestion de la reserva
-                Intent intent= new Intent(this.getClass(),MainActivity.class);
-                startActivity(intent);
-            }
-        }.start();
-        //Intent intent= new Intent(this,MainActivity.class);
-        //startActivity(intent);
-    }
-    */
-
-
     }
 
     public void actualizalibresreservadas() {

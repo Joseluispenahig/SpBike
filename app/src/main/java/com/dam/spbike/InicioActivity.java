@@ -1,10 +1,8 @@
 package com.dam.spbike;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -46,19 +44,11 @@ public class InicioActivity extends Activity {
         for (int i = 0; i < supplierNames.size(); i++) {
             System.out.println(supplierNames.get(i));
             final String URL = "http://api.citybik.es/v2/networks/" + supplierNames.get(i);
-
-            //final ProgressDialog dlg = ProgressDialog.show(this,
-            //        "Obteniendo los datos REST", "Por favor, espere...", true);
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, (String) null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                           // dlg.dismiss();
-                            //Miramos si el email es correcto:
                             try {
-
-                                //Usando opción 1:
-                                //String hostExists = response.getString("hostExists");
 
                                 String ciudad = response.getJSONObject("network").getJSONObject("location").getString("city");
 
@@ -90,16 +80,6 @@ public class InicioActivity extends Activity {
                                     //Insertamos en BD
                                     MDB.insertarESTACION(nombre, direccion, latitude, longitude, ciudad, uid, cantidad, libres, reservadas);
                                 }
-                                //Usando opción 2:
-                                //String hostExists = response.getString("valid");
-
-                                //if (ciudad == "true") {
-                                //   //El email es correcto Toast toast1 =
-                                //    Toast.makeText(getApplicationContext(), "Email correcto", Toast.LENGTH_SHORT).show();
-                                //} else {
-                                //    //El email es incorrecto
-                                //    Toast.makeText(getApplicationContext(), "Email erróneo", Toast.LENGTH_SHORT).show();
-                                //}
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -128,22 +108,5 @@ public class InicioActivity extends Activity {
                 });
             }
         }, 5000);
-       /* new CountDownTimer(20000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                System.out.println("seconds remaining: " + millisUntilFinished / 1000);
-            }
-
-            public void onFinish() {
-                System.out.println("done!");
-                //Puede sernos util para la gestion de la reserva
-                Intent intent= new Intent(this.getClass(),MainActivity.class);
-                startActivity(intent);
-            }
-        }.start();
-        //Intent intent= new Intent(this,MainActivity.class);
-        //startActivity(intent);
-    }
-    */
     }
 }

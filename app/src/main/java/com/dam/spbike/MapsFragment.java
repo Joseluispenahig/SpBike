@@ -65,7 +65,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback{
                 // your code here
                 escogidaciudad = ciudades[position];
                 onMapReady(mMap);
-               /* if (escogidaciudad != "Seleccionar") {
+               /* Pruebas: if (escogidaciudad != "Seleccionar") {
                     estacionesBD = MDB.obtenerESTACIONES(escogidaciudad);
 
                     mMap = googleMap;
@@ -156,6 +156,5 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback{
                 startActivity(intent);
             }
         });
-        //else if(escogidaciudad==null);
     }
 }
